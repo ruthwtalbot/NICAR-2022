@@ -46,7 +46,7 @@ Open the attribute table for the Census Tract shapefile, and you’ll see the GE
 - Set 'Output Field' = to geoid or some similar name
 - Set 'Output Field type' = to Text(string)
 - Set 'Output Field length' = 20 (must be large enough to accomodate a 20-letter geoid)
-- In the expression box (empty text box below), type '1400000US' + tostring("GEOID10")
+- In the expression box (empty text box below), type '1400000US' + "GEOID10"
   - This tells the Field Calculator to create a new field of type string, but adding the 14... prefix to each GEOID 
 - Click 'Ok'
 
