@@ -72,7 +72,7 @@ Note: you can do all sort of expressions in the field calculator. The box on the
 
 This will tell QGIS to color the geodata by whatever property you select, giving you a way to eyeball the data, looking for possible trends.
 
-## Count Number of Grocery Stores in Each Tract
+### Count Number of Grocery Stores in Each Tract
 - Go to Vector > Analysis Tools > Count Points in Polygon
 - Select 'Polygons' = to the Atlanta_metro_area layer
 - Select the Points = to the grocery store layer
@@ -82,9 +82,54 @@ This will tell QGIS to color the geodata by whatever property you select, giving
 - You should see a new layer called ‘Count’ in the layers area
 - Right click on ‘Count’ and go to Export > Save Features As and save the file as a .csv
 
-You should now have a .csv with GEOID, median income, % white, and the # grocery stores for every tract in the Atlanta Metro Area! Analyze however you prefer (but we can talk you through some basic ideas if you'd like :)
+You should now have a .csv with GEOID, median income, % white, population, and the # grocery stores for every tract in the Atlanta Metro Area! Analyze however you prefer (but we can talk you through some basic ideas if you'd like :)
 
 
+
+
+## Optional Next Exercise -- Area Analysis
+
+Sometimes the geodata we want to analyse isn't lat/lngs, it's area. For instance, we might want to look at the % of each census tract in the Atlanta Metro area that is public park. 
+
+- First, load in the Greenspace data set from the data folder, then follow the instructions below. 
+
+### Calculate Area of Census Tracts
+First, we need to add in an area field to each census tract, so we know the area covered by each tract
+
+- Open the Field Calculator for the Atlanta Census Tract layer
+- Set 'Output Field' = to tract_area or some similar name
+- Set 'Output Field type' = to Decimal number 
+- Put the expression $area in the text field
+- Click 'Ok'
+
+This might take a second, because it's calcuating the area covered by each tract.
+
+### Split Up Parks by Tract
+
+Some parks' boundaries cross census tracts, so we need to break apart the parks that are in many tracts before calculating area.
+
+- Vector -> Geoprocessing tools -> Intersect 
+- Input Layer = Atlanta Metro Area Tracts
+- Overlay Layer = Greenspace Layer
+- Click ‘Run’ (this may take a minute)
+
+This will produce a layer called ‘Intersection’ which will contain the overlap between the parks and the tracts, meaning it will split the parks by tract boundaries AND add tract IDs to the new, split up park data. 
+
+
+### Calculate Area of Parks within Tracts
+
+- Open the Field Calculator for the 'Intersection' layer
+- Set 'Output Field' = to park_area or some similar name
+- Set 'Output Field type' = to Decimal number 
+- Put the expression $area in the text field
+- Click 'Ok'
+
+This might take a second.
+
+### Merge Data
+- Go to Vector > Data Management > Merge Layers
+- Select the Atlanta Metro Area Tracts layer and the Intersection layer, click ‘Run’
+- Export the result to csv, where we will use pivot tables to join by census tract and divide by area.
 
 
 
