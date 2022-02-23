@@ -41,12 +41,12 @@ To inspect a datasets attributes right click on the dataset in the Layers detail
 
 Open the attribute table for either census dataset (Income or Race) and look at the column GEO_ID. It should be in the format 1400000US13001950100, with the prefix ‘1400000US’. The only meaningful digits for us are the last 11. The first two digits, 13, represents the fips code for Georgia, the next 3 digits indicate the county, and the last 6 indicate census tracts/block etc. 
 
-Open the attribute table for the Census Tract shapefile, and you’ll see the GEOID10s are in the format 13001950100 (missing the prefix), so we need to change them to match. To do that, follow steps below:
+Open the attribute table for the Atlanta_Metro_Census_Tracts shapefile, and you’ll see the GEOID10s are in the format 13001950100 (missing the prefix), so we need to change them to match. To do that, follow steps below:
 - Select the Field calculator in the top menu (looks like an abacus)
 - Set 'Output Field' = to geoid or some similar name
 - Set 'Output Field type' = to Text(string)
 - Set 'Output Field length' = 20 (must be large enough to accomodate a 20-letter geoid)
-- In the expression box (empty text box below), type '1400000US' + tostring("GEOID10")
+- In the expression box (empty text box below), type '1400000US' + "GEOID10"
   - This tells the Field Calculator to create a new field of type string, but adding the 14... prefix to each GEOID 
 - Click 'Ok'
 
@@ -62,7 +62,7 @@ Note: you can do all sort of expressions in the field calculator. The box on the
 - Click 'Ok', it might take a second but you should see a join appear in the Joins box
 
 ### Visualize the Data (Optional)
-- Double click the Atlanta Metro Tract again
+- Double click the Atlanta_Metro_Census_Tracts layer again
 - Go to ‘Symbology’
 - In 'Value', select the column you want to color by. 
 - In the dropdown at the top, select ‘Graduated’ (default should be ‘Single Symbol’)
@@ -75,7 +75,7 @@ This will tell QGIS to color the geodata by whatever property you select, giving
 ### Count Number of Grocery Stores in Each Tract
 - Go to Vector > Analysis Tools > Count Points in Polygon
 - Select 'Polygons' = to the Atlanta_metro_area layer
-- Select the Points = to the grocery store layer
+- Select the Points = to the Grocery_Stores_Atlanta_Metro layer
 - Make sure 'Count Field Name' = NUMPOINTS
   - This tells QGIS to sum by # of points in each polygon/tract
 - Click ‘Run’
