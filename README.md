@@ -82,7 +82,7 @@ This will tell QGIS to color the geodata by whatever property you select, giving
 - You should see a new layer called ‘Count’ in the layers area
 - Right click on ‘Count’ and go to Export > Save Features As and save the file as a .csv
 
-You should now have a .csv with GEOID, median income, % white, population, and the # grocery stores for every tract in the Atlanta Metro Area! Analyze however you prefer (but we can talk you through some basic ideas if you'd like :)
+You should now have a .csv with GEOID, median income, % white, population, and the # grocery stores for every tract in the Atlanta Metro Area! Analyze however you prefer (but we can talk you through some basic ideas :) )
 
 
 
