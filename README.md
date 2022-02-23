@@ -61,6 +61,32 @@ Note: you can do all sort of expressions in the field calculator. The box on the
 - Set Target field = the new field in we created in the step above 
 - Click 'Ok', it might take a second but you should see a join appear in the Joins box
 
+### Visualize the Data (Optional)
+- Double click the Atlanta Metro Tract again
+- Go to ‘Symbology’
+- In 'Value', select the column you want to color by. 
+- In the dropdown at the top, select ‘Graduated’ (default should be ‘Single Symbol’)
+- On the bottom right, increase the number of ‘Classes’ to somewhere around 10. 
+ - Check the ranges generated are expected given whatever the data is.  
+- Click 'Ok'
+
+This will tell QGIS to color the geodata by whatever property you select, giving you a way to eyeball the data, looking for possible trends.
+
+## Count Number of Grocery Stores in Each Tract
+- Go to Vector > Analysis Tools > Count Points in Polygon
+- Select 'Polygons' = to the Atlanta_metro_area layer
+- Select the Points = to the grocery store layer
+- Make sure 'Count Field Name' = NUMPOINTS
+  - This tells QGIS to sum by # of points in each polygon/tract
+- Click ‘Run’
+- You should see a new layer called ‘Count’ in the layers area
+- Right click on ‘Count’ and go to Export > Save Features As and save the file as a .csv
+
+You should now have a .csv with GEOID, median income, % white, and the # grocery stores for every tract in the Atlanta Metro Area! Analyze however you prefer (but we can talk you through some basic ideas if you'd like :)
+
+
+
+
 
 
 
