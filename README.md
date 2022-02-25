@@ -13,7 +13,7 @@
     - In the data provided, select Atlanta_Metro_Census_Tracts > Atlanta_metro_area.shp.
   - Once the .shp file is selected, click ‘Add’. 
 - Repeat this process with the Grocery_Stores_Atlanta_Metro shapefile. 
-- Click ‘Close’ close the window and view the data. You should see both datasets load in the view and their names listed in the 'Layers' section to the bottom left.
+- Click ‘Close’ to close the window and view the data. You should see both datasets load in the view and their names listed in the 'Layers' section to the bottom left.
 
 Note: You should be able to load shapefile data by selecting any of the main 3 files in the folder (.shp, .dbf, .shx). Explanations of file types are below for those interested!
 
@@ -28,29 +28,31 @@ These should be in every shapefile, you may also see:
 
 #### Load Text Data
 - Go to Layer > Add Layer > Add Delimited Text Layer 
-- Go to the Income folder in the data and select the .csv in the folder named 'income.csv' and click ‘Open’
+- Browse to the Income folder in the data and select the .csv in the folder named 'income.csv' and click ‘Open’
 - Under Geometry Definition, make sure ‘No geometry’ is selected. (Census data will have GEOIDs we can use to join with geometric data, but it does not contain geometry itself.)
 - Repeat the process for ‘Race data’
+
+Congratulations! You should now have four layers in the QGIS layers panel.
 
 ### Join Data
 
 #### Change field values in QGIS
 To join data with geometries to data without geometries, we need a field to join across datasets. 
 
-To inspect a datasets attributes right click on the dataset in the Layers detail (bottom left) > Open Attribute Table
+To inspect a dataset's attributes, right click on the dataset in the Layers panel (bottom left) > Open Attribute Table
 
-Open the attribute table for either census dataset (Income or Race) and look at the column GEO_ID. It should be in the format 1400000US13001950100, with the prefix ‘1400000US’. The only meaningful digits for us are the last 11. The first two digits, 13, represents the fips code for Georgia, the next 3 digits indicate the county, and the last 6 indicate census tracts/block etc. 
+Open the attribute table for either census dataset (Income or Race) and look at the column GEO_ID. It should be in the format 1400000US13001950100. Notice how they all have the prefix ‘1400000US’ — the only meaningful digits for us are the last 11: The first two digits, `13`, represents the FIPS code for Georgia, the next 3 digits indicate the county, and the last 6 indicate census tracts/block etc. 
 
 Open the attribute table for the Atlanta_Metro_Census_Tracts shapefile, and you’ll see the GEOID10s are in the format 13001950100 (missing the prefix), so we need to change them to match. To do that, follow steps below:
 - Select the Field calculator in the top menu (looks like an abacus)
-- Set 'Output Field' = to geoid or some similar name
-- Set 'Output Field type' = to Text(string)
+- Set 'Output Field' = `geoid` or some similar name
+- Set 'Output Field type' =  Text(string)
 - Set 'Output Field length' = 20 (must be large enough to accomodate a 20-letter geoid)
 - In the expression box (empty text box below), type '1400000US' + "GEOID10"
-  - This tells the Field Calculator to create a new field of type string, but adding the 14... prefix to each GEOID 
+  - This tells the Field Calculator to create a new field of type string, but adding the `1400000US` prefix to each GEOID 
 - Click 'Ok'
 
-Note: you can do all sort of expressions in the field calculator. The box on the right hand side is a great starting point to explore!
+Note: you can do all sort of expressions in the field calculator. The box on the right-hand side is a great starting point to explore!
 
 #### Join data on Field
 - Double click on the Atlanta_metro_area in the Layers area
@@ -58,8 +60,8 @@ Note: you can do all sort of expressions in the field calculator. The box on the
 - Click the green plus button on the bottom left
 - Set Join Layer = to either Income or Race data
 - Set Join field = GEO_ID (or whatever the geoid field is)
-- Set Target field = the new field in we created in the step above 
-- Click 'Ok', it might take a second but you should see a join appear in the Joins box
+- Set Target field = the new field in we created in the step above, `geoid` 
+- Click 'Ok'. It might take a second but you should see a join appear in the Joins box
 
 ### Visualize the Data (Optional)
 - Double click the Atlanta_Metro_Census_Tracts layer again
@@ -67,7 +69,7 @@ Note: you can do all sort of expressions in the field calculator. The box on the
 - In 'Value', select the column you want to color by. 
 - In the dropdown at the top, select ‘Graduated’ (default should be ‘Single Symbol’)
 - On the bottom right, increase the number of ‘Classes’ to somewhere around 10. 
- - Check the ranges generated are expected given whatever the data is.  
+- Check the ranges generated are expected given whatever the data is.  
 - Click 'Ok'
 
 This will tell QGIS to color the geodata by whatever property you select, giving you a way to eyeball the data, looking for possible trends.
@@ -82,7 +84,7 @@ This will tell QGIS to color the geodata by whatever property you select, giving
 - You should see a new layer called ‘Count’ in the layers area
 - Right click on ‘Count’ and go to Export > Save Features As and save the file as a .csv
 
-You should now have a .csv with GEOID, median income, % white, population, and the # grocery stores for every tract in the Atlanta Metro Area! Analyze however you prefer (but we can talk you through some basic ideas :) )
+You should now have a .csv with GEOID, median income, % white, population, and the # grocery stores for every tract in the Atlanta Metro Area! Analyze however you prefer — but we can talk you through some basic ideas :) 
 
 
 
@@ -94,12 +96,12 @@ Sometimes the geodata we want to analyse isn't lat/lngs, it's area. For instance
 - First, load in the Greenspace data set from the data folder, then follow the instructions below. 
 
 ### Calculate Area of Census Tracts
-First, we need to add in an area field to each census tract, so we know the area covered by each tract
+We need to add in an area field to each census tract, so we know the area covered by each tract
 
 - Open the Field Calculator for the Atlanta Census Tract layer
-- Set 'Output Field' = to tract_area or some similar name
-- Set 'Output Field type' = to Decimal number 
-- Put the expression $area in the text field
+- Set 'Output Field' =  `tract_area` or some similar name
+- Set 'Output Field type' =  Decimal number 
+- Type the expression `$area` in the text field
 - Click 'Ok'
 
 This might take a second, because it's calcuating the area covered by each tract.
@@ -119,7 +121,7 @@ This will produce a layer called ‘Intersection’ which will contain the overl
 ### Calculate Area of Parks within Tracts
 
 - Open the Field Calculator for the 'Intersection' layer
-- Set 'Output Field' = to park_area or some similar name
+- Set 'Output Field' =  `park_area` or some similar name
 - Set 'Output Field type' = to Decimal number 
 - Put the expression $area in the text field
 - Click 'Ok'
