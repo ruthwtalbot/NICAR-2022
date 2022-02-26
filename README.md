@@ -10,7 +10,7 @@
 - In the pop-up window that opens:
   - Source Type = File should be the default, but if it isn’t, select that. 
   - In Vector Dataset(s) under 'Source', open the file finder (3 dots to the right)
-    - In the data provided, select Atlanta_Metro_Census_Tracts > Atlanta_metro_area.shp.
+    - In the data provided, select Georgia_Census_Tracts > Georgia_Census_Tracts.shp.
   - Once the .shp file is selected, click ‘Add’. 
 - Repeat this process with the Grocery_Stores_Atlanta_Metro shapefile. 
 - Click ‘Close’ to close the window and view the data. You should see both datasets load in the view and their names listed in the 'Layers' section to the bottom left.
@@ -35,6 +35,17 @@ These should be in every shapefile, you may also see:
 Congratulations! You should now have four layers in the QGIS layers panel.
 
 ### Join Data
+
+#### Filter Shapefile by ID to Get Counties of Interest
+- For the Georgia_Census_Tracts, go to Attribute Table and click on 'Select Features by Expression" (looks like an E and a square)
+- In the expression area, paste the formula below
+    array_contains( array('13057', '13063', '13067', '13089', '13097', '13113', '13121', '13135', '13151', '13247'), left( "GEOID", 5))
+- Click 'Select Features' on the bottom right, and then hit 'Close'
+  - You should see the tracts within those counties highlighted
+- Right click on the file and go to Export > Export Selected Features As 
+  - Important: select the 'Selected' Features option, which is the second option, not just export features as 
+- And save files as Atlanta_Metro_Census_Tracts or something similar. That should now appear in your layers bar.
+- Unselect or Remove Georgia_Census_Tracts, we won't be using it anymore.
 
 #### Change field values in QGIS
 To join data with geometries to data without geometries, we need a field to join across datasets. 
@@ -106,32 +117,31 @@ We need to add in an area field to each census tract, so we know the area covere
 
 This might take a second, because it's calcuating the area covered by each tract.
 
-### Split Up Parks by Tract
+### Calculate Difference between Tract and Parks
+- Go to Vector > Geoprocessing Tools > Difference
+- Select the Input Layer = Atlanta Census Tract layer and the Overlay = Greenspace
+- Click 'Run'
 
-Some parks' boundaries cross census tracts, so we need to break apart the parks that are in many tracts before calculating area.
+You should see a new layer called 'Difference' outputted, unselect Greenspace and Atlanta Tract Area to see it more clearly. This contains the parts of census tracts NOT covered in park, but still contain the census tract total area as a field.
 
-- Vector -> Geoprocessing tools -> Intersect 
-- Input Layer = Atlanta Metro Area Tracts
-- Overlay Layer = Greenspace Layer
-- Click ‘Run’ (this may take a minute)
+### Calculate New Area of Census Tracts Without Parks
+Do the same calculation we did above, just with these new polygons.
 
-This will produce a layer called ‘Intersection’ which will contain the overlap between the parks and the tracts, meaning it will split the parks by tract boundaries AND add tract IDs to the new, split up park data. 
-
-
-### Calculate Area of Parks within Tracts
-
-- Open the Field Calculator for the 'Intersection' layer
-- Set 'Output Field' =  `park_area` or some similar name
-- Set 'Output Field type' = to Decimal number 
-- Put the expression $area in the text field
+- Open the Field Calculator for the Difference layer
+- Set 'Output Field' =  `tract_area` or some similar name
+- Set 'Output Field type' =  Decimal number 
+- Type the expression `$area` in the text field
 - Click 'Ok'
 
-This might take a second.
+### Calculate the % of Total Area
+- Open the Field Calculator again
+- Set 'Output Field' =  `percent` or some similar name
+- Set 'Output Field type' =  Decimal number  
+- Enter the expression below and click 'Ok'
+    1 -  "area_part" / "area_full" 
+This will add a field with the percent of tract covered by greenspace.
 
-### Merge Data
-- Go to Vector > Data Management > Merge Layers
-- Select the Atlanta Metro Area Tracts layer and the Intersection layer, click ‘Run’
-- Export the result to csv, where we will use pivot tables to join by census tract and divide by area.
+Export and analyze!
 
 
 
