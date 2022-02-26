@@ -39,7 +39,9 @@ Congratulations! You should now have four layers in the QGIS layers panel.
 #### Filter Shapefile by ID to Get Counties of Interest
 - For the Georgia_Census_Tracts, go to Attribute Table and click on 'Select Features by Expression" (looks like an E and a square)
 - In the expression area, paste the formula below
+
     array_contains( array('13057', '13063', '13067', '13089', '13097', '13113', '13121', '13135', '13151', '13247'), left( "GEOID", 5))
+    
 - Click 'Select Features' on the bottom right, and then hit 'Close'
   - You should see the tracts within those counties highlighted
 - Right click on the file and go to Export > Export Selected Features As 
@@ -138,7 +140,9 @@ Do the same calculation we did above, just with these new polygons.
 - Set 'Output Field' =  `percent` or some similar name
 - Set 'Output Field type' =  Decimal number  
 - Enter the expression below and click 'Ok'
+
     1 -  "area_part" / "area_full" 
+    
 This will add a field with the percent of tract covered by greenspace.
 
 Export and analyze!
