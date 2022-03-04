@@ -58,9 +58,9 @@ Open the attribute table for either census dataset (Income or Race) and look at 
 
 Open the attribute table for the Atlanta_Metro_Census_Tracts shapefile, and you’ll see the GEOIDs are in the format 13001950100 (missing the prefix), so we need to change them to match. To do that, follow steps below:
 - Select the Field calculator in the top menu (looks like an abacus)
-- Set 'Output Field' = `geoid` or some similar name
+- Set 'Output Field' = `id` or some similar name
 - Set 'Output Field type' =  Text(string)
-- Set 'Output Field length' = 20 (must be large enough to accomodate a 20-letter geoid)
+- Set 'Output Field length' = 20 (must be large enough to accomodate a 20-letter id)
 - In the expression box (empty text box below), type '1400000US' + "GEOID"
   - This tells the Field Calculator to create a new field of type string, but adding the `1400000US` prefix to each GEOID 
 - Click 'Ok'
@@ -72,8 +72,8 @@ Note: you can do all sort of expressions in the field calculator. The box on the
 - Click on the ‘Joins’ option on the left-hand side of the pop up
 - Click the green plus button on the bottom left
 - Set Join Layer = to either Income or Race data
-- Set Join field = GEO_ID (or whatever the geoid field is)
-- Set Target field = the new field in we created in the step above, `geoid` 
+- Set Join field = GEO_ID (or whatever the id field is)
+- Set Target field = the new field in we created in the step above, `id` 
 - Click 'Ok'. It might take a second but you should see a join appear in the Joins box
 
 ### Visualize the Data (Optional)
