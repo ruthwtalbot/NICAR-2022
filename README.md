@@ -56,12 +56,12 @@ To inspect a dataset's attributes, right click on the dataset in the Layers pane
 
 Open the attribute table for either census dataset (Income or Race) and look at the column GEO_ID. It should be in the format 1400000US13001950100. Notice how they all have the prefix ‘1400000US’ — the only meaningful digits for us are the last 11: The first two digits, `13`, represents the FIPS code for Georgia, the next 3 digits indicate the county, and the last 6 indicate census tracts/block etc. 
 
-Open the attribute table for the Atlanta_Metro_Census_Tracts shapefile, and you’ll see the GEOID10s are in the format 13001950100 (missing the prefix), so we need to change them to match. To do that, follow steps below:
+Open the attribute table for the Atlanta_Metro_Census_Tracts shapefile, and you’ll see the GEOIDs are in the format 13001950100 (missing the prefix), so we need to change them to match. To do that, follow steps below:
 - Select the Field calculator in the top menu (looks like an abacus)
 - Set 'Output Field' = `geoid` or some similar name
 - Set 'Output Field type' =  Text(string)
 - Set 'Output Field length' = 20 (must be large enough to accomodate a 20-letter geoid)
-- In the expression box (empty text box below), type '1400000US' + "GEOID10"
+- In the expression box (empty text box below), type '1400000US' + "GEOID"
   - This tells the Field Calculator to create a new field of type string, but adding the `1400000US` prefix to each GEOID 
 - Click 'Ok'
 
