@@ -100,8 +100,11 @@ This will tell QGIS to color the geodata by whatever property you select, giving
 
 You should now have a .csv with GEOID, median income, % white, population, and the # grocery stores for every tract in the Atlanta Metro Area! Analyze however you prefer — but we can talk you through some basic ideas :) 
 
-
-
+Quartile functions:
+=SUM(C2:INDIRECT("C"&ROUND(738/4, 0)))
+=SUM(INDIRECT("C"&ROUND(738/4, 0)+1):INDIRECT("C"&ROUND(738/4, 0) * 2))
+=SUM(INDIRECT("C"&ROUND(738/4, 0)*2+1):INDIRECT("C"&ROUND(738/4, 0) * 3))
+=SUM(INDIRECT("C"&ROUND(738/4, 0)*3+1):INDIRECT("C"&ROUND(738/4, 0) * 4))
 
 ## Optional Next Exercise -- Area Analysis
 
