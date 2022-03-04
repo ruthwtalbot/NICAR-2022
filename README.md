@@ -1,5 +1,7 @@
 # Combining and Analyzing Data in QGIS
 
+Link to slides: https://docs.google.com/presentation/d/19zR6xYUu7FWxby94WDf7TaAuxhOwnoAo-TAVW17DZwE/edit
+
 ## Analyze Grocery Store Data
 
 ### Load in Shapefiles and Text Data
