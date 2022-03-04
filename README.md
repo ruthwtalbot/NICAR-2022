@@ -80,6 +80,7 @@ Note: you can do all sort of expressions in the field calculator. The box on the
 - Double click the Atlanta_Metro_Census_Tracts layer again
 - Go to ‘Symbology’
 - In 'Value', select the column you want to color by. 
+  - If you don't see the column you want appear, it may be the wrong type. To convert from string to number, click the E sign next to the Value dropdown and paste   to_int( "income_S1903_C03_001E") into the expression area.
 - In the dropdown at the top, select ‘Graduated’ (default should be ‘Single Symbol’)
 - On the bottom right, increase the number of ‘Classes’ to somewhere around 10. 
 - Check the ranges generated are expected given whatever the data is.  
